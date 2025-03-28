@@ -1,0 +1,14 @@
+.sort-button {
+	background: #ffce6b;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background 0.2s;
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+.sort-button:hover {
+	background: #ff976b;
+}

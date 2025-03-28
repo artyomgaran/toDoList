@@ -1,0 +1,29 @@
+.input-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.task-input {
+	flex-grow: 1;
+	padding: 6px 10px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 16px;
+}
+
+.add-button {
+	background: #6b89ff;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background 0.2s;
+	font-weight: bold;
+}
+
+.add-button:hover {
+	background: #756bff;
+}
