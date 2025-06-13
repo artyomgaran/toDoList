@@ -1,69 +1,71 @@
-import styles from './todoitem.module.css';
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
+import { requestDeleteToDo, requestChangeToDo } from '../../api';
 
-export const ToDoItem = ({
-	todo,
-	editingTaskId,
-	setEditingTaskId,
-	changeTask,
-	setChangeTask,
-	requestChangeToDo,
-	requestDeleteToDo,
-	isCreating,
-	isDeleting,
-}) => (
-	<div className={styles['todo-item']}>
-		{editingTaskId === todo.id ? (
-			<div className={styles['input-container']}>
-				<input
-					type="text"
-					className={styles['task-input']}
-					value={changeTask}
-					onChange={(e) => setChangeTask(e.target.value)}
-					placeholder="Изменить задачу"
-				/>
-				<button
-					className={styles['save-button']}
-					onClick={() => requestChangeToDo(todo.id)}
-				>
-					Сохранить
-				</button>
-			</div>
-		) : (
-			<>
-				<p className={styles['todo-title']}>{todo.title}</p>
-				<div className={styles['todo-actions']}>
-					<button
-						disabled={isCreating}
-						className={styles['change-button']}
-						onClick={() => setEditingTaskId(todo.id)}
-					>
-						Изменить
-					</button>
-					<button
-						disabled={isDeleting}
-						className={styles['delete-button']}
-						onClick={() => requestDeleteToDo(todo.id)}
-					>
-						Удалить
+import styles from './todoitem.module.css';
+
+export const ToDoItem = ({ todo, refreshToDos }) => {
+	const [editingTaskId, setEditingTaskId] = useState(null);
+	const [changeTask, setChangeTask] = useState('');
+	const [isDeleting, setIsDeleting] = useState(false);
+	const [isCreating, setIsCreating] = useState(false);
+
+	const handleDelete = () => {
+		setIsDeleting(true);
+		requestDeleteToDo(todo.id)
+			.then(() => refreshToDos())
+			.finally(() => {
+				setIsDeleting(false);
+			});
+	};
+	const handleChange = () => {
+		if (!changeTask.trim()) return;
+
+		setIsCreating(true);
+		requestChangeToDo(todo.id, changeTask)
+			.then(() => {
+				refreshToDos();
+				setChangeTask('');
+				setEditingTaskId(null);
+			})
+			.finally(() => setIsCreating(false));
+	};
+	return (
+		<div className={styles['todo-item']}>
+			{editingTaskId === todo.id ? (
+				<div className={styles['input-container']}>
+					<input
+						type="text"
+						className={styles['task-input']}
+						value={changeTask}
+						onChange={(e) => setChangeTask(e.target.value)}
+						placeholder="Изменить задачу"
+					/>
+					<button className={styles['save-button']} onClick={handleChange}>
+						✎
 					</button>
 				</div>
-			</>
-		)}
-	</div>
-);
-
-ToDoItem.propTypes = {
-	todo: PropTypes.shape({
-		id: PropTypes.number.isRequired,
-		title: PropTypes.string.isRequired,
-	}).isRequired,
-	editingTaskId: PropTypes.number,
-	setEditingTaskId: PropTypes.func.isRequired,
-	changeTask: PropTypes.string.isRequired,
-	setChangeTask: PropTypes.func.isRequired,
-	requestChangeToDo: PropTypes.func.isRequired,
-	requestDeleteToDo: PropTypes.func.isRequired,
-	isCreating: PropTypes.bool.isRequired,
-	isDeleting: PropTypes.bool.isRequired,
+			) : (
+				<>
+					<p className={styles['todo-title']}>{todo.title}</p>
+					<div className={styles['todo-actions']}>
+						<button
+							disabled={isCreating}
+							className={styles['change-button']}
+							onClick={() => setEditingTaskId(todo.id)}
+						>
+							✎
+						</button>
+						<button
+							disabled={isDeleting}
+							className={styles['delete-button']}
+							onClick={() => handleDelete()}
+						>
+							✖
+						</button>
+					</div>
+				</>
+			)}
+		</div>
+	);
 };

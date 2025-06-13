@@ -1,15 +1,31 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
+import { requestAddToDo } from '../../api';
+
 import styles from './addtaskform.module.css';
 
-export const AddTaskForm = ({
-	isCreating,
-	isInputVisible,
-	setIsInputVisible,
-	newTask,
-	setNewTask,
-	requestAddToDo,
-}) =>
-	isInputVisible ? (
+export const AddTaskForm = ({ refreshToDos }) => {
+	const [newTask, setNewTask] = useState('');
+	const [isInputVisible, setIsInputVisible] = useState(false);
+	const [isCreating, setIsCreating] = useState(false);
+
+	const handleAdd = () => {
+		if (!newTask.trim()) return;
+
+		setIsCreating(true);
+
+		requestAddToDo(newTask)
+			.then(() => {
+				refreshToDos();
+				setNewTask('');
+				setIsInputVisible(false);
+			})
+			.finally(() => {
+				setIsCreating(false);
+			});
+	};
+
+	return isInputVisible ? (
 		<div className={styles['input-container']}>
 			<input
 				type="text"
@@ -21,7 +37,7 @@ export const AddTaskForm = ({
 			<button
 				disabled={isCreating}
 				className={styles['add-button']}
-				onClick={requestAddToDo}
+				onClick={handleAdd}
 			>
 				Добавить
 			</button>
@@ -35,12 +51,4 @@ export const AddTaskForm = ({
 			Добавить задачу
 		</button>
 	);
-
-AddTaskForm.propTypes = {
-	isCreating: PropTypes.bool.isRequired,
-	isInputVisible: PropTypes.bool.isRequired,
-	setIsInputVisible: PropTypes.func.isRequired,
-	newTask: PropTypes.string.isRequired,
-	setNewTask: PropTypes.func.isRequired,
-	requestAddToDo: PropTypes.func.isRequired,
 };

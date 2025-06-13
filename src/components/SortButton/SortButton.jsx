@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
+
 import styles from './sortbutton.module.css';
 
 export const SortButton = ({ isSorted, setIsSorted }) => {
@@ -7,9 +8,4 @@ export const SortButton = ({ isSorted, setIsSorted }) => {
 			{isSorted ? 'Отключить сортировку' : 'Сортировать A-Z'}
 		</button>
 	);
-};
-
-SortButton.propTypes = {
-	isSorted: PropTypes.bool.isRequired,
-	setIsSorted: PropTypes.func.isRequired,
 };

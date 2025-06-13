@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
 import styles from './searchbar.module.css';
 
 export const SearchBar = ({ searchQuery, setSearchQuery }) => {
@@ -11,9 +11,4 @@ export const SearchBar = ({ searchQuery, setSearchQuery }) => {
 			placeholder="Поиск задач..."
 		/>
 	);
-};
-
-SearchBar.propTypes = {
-	searchQuery: PropTypes.string.isRequired,
-	setSearchQuery: PropTypes.func.isRequired,
 };
