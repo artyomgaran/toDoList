@@ -15,6 +15,20 @@
 	gap: 8px;
 }
 
+.input-container {
+	display: flex;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.task-input {
+	flex-grow: 1;
+	padding: 6px 10px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 16px;
+}
+
 .change-button {
 	background: #6bf0ff;
 	color: white;
@@ -28,6 +42,10 @@
 
 .change-button:hover {
 	background: #6bceff;
+}
+
+.change-button:disabled {
+	background: #a0a0a0;
 }
 
 .save-button {
@@ -44,19 +62,8 @@
 .save-button:hover {
 	background: #7a6bff;
 }
-
-.input-container {
-	display: flex;
-	gap: 10px;
-	margin-top: 10px;
-}
-
-.task-input {
-	flex-grow: 1;
-	padding: 6px 10px;
-	border: 1px solid #ccc;
-	border-radius: 6px;
-	font-size: 16px;
+.save-button:disabled {
+	background: #a0a0a0;
 }
 
 .delete-button {
@@ -72,4 +79,7 @@
 
 .delete-button:hover {
 	background: #eb6363;
+}
+.delete-button:disabled {
+	background: #a0a0a0;
 }

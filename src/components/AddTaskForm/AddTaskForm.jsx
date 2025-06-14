@@ -7,12 +7,13 @@ import styles from './addtaskform.module.css';
 export const AddTaskForm = ({ refreshToDos }) => {
 	const [newTask, setNewTask] = useState('');
 	const [isInputVisible, setIsInputVisible] = useState(false);
-	const [isCreating, setIsCreating] = useState(false);
+	const [isAddToDo, setIsAddToDo] = useState(false);
 
 	const handleAdd = () => {
+		//если тудушка пустая, ничего не делаем
 		if (!newTask.trim()) return;
-
-		setIsCreating(true);
+		setIsAddToDo(true);
+		// апи "добавления"
 
 		requestAddToDo(newTask)
 			.then(() => {
@@ -21,7 +22,7 @@ export const AddTaskForm = ({ refreshToDos }) => {
 				setIsInputVisible(false);
 			})
 			.finally(() => {
-				setIsCreating(false);
+				setIsAddToDo(false);
 			});
 	};
 
@@ -35,7 +36,7 @@ export const AddTaskForm = ({ refreshToDos }) => {
 				placeholder="Введите задачу"
 			/>
 			<button
-				disabled={isCreating}
+				disabled={isAddToDo}
 				className={styles['add-button']}
 				onClick={handleAdd}
 			>
@@ -44,7 +45,7 @@ export const AddTaskForm = ({ refreshToDos }) => {
 		</div>
 	) : (
 		<button
-			disabled={isCreating}
+			disabled={isAddToDo}
 			className={styles['add-button']}
 			onClick={() => setIsInputVisible(true)}
 		>

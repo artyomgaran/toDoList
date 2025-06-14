@@ -27,3 +27,7 @@
 .add-button:hover {
 	background: #756bff;
 }
+
+.add-button:disabled {
+	background: #a0a0a0;
+}

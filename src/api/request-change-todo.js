@@ -3,5 +3,11 @@ export const requestChangeToDo = (id, title) => {
 		method: 'PATCH',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
 		body: JSON.stringify({ title: title }),
-	}).then(() => {});
+	}).then((res) => {
+		if (!res.ok) {
+			throw new Error('Ошибка изменения задачи');
+		}
+
+		return res.json();
+	});
 };

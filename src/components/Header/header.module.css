@@ -1,3 +1,16 @@
+.search-input {
+	display: block;
+	width: 578px;
+	padding: 6px 10px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 16px;
+	margin-bottom: 1rem !important;
+	flex-shrink: 0;
+}
+.search-container {
+	margin-bottom: 2rem;
+}
 .sort-button {
 	background: #ffce6b;
 	color: white;

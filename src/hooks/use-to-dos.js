@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-export const useToDos = (refreshToDosFlag) => {
+export const useToDos = () => {
 	const [toDos, setToDos] = useState([]);
+	const [refreshFlag, setRefreshFlag] = useState(false);
+
+	const refreshToDos = useCallback(() => {
+		setRefreshFlag((prev) => !prev);
+	}, []);
 
 	useEffect(() => {
 		fetch('http://localhost:3000/todos')
 			.then((res) => res.json())
 			.then((data) => setToDos(data));
-	}, [refreshToDosFlag]);
+	}, [refreshFlag]);
 
-	return { toDos };
+	return { toDos, refreshToDos };
 };
